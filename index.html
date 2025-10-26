@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Automerge & Alpine.js Counter</title>
+  </head>
+
+  <body>
+    <h1>Automerge & Alpine.js Counter</h1>
+    <p>A local-first multiplayer counter powered by Automerge and Alpine.js.</p>
+    <p>Play around! Increment the counter below. Open the same URL in other tab. Turn off networking. Increment the counter. Turn on network connection. Open URL in another tab.</p>
+
+    <h2>Demo</h2>
+    <div x-data="counter()">
+      <p x-text="count"></p>
+      <button x-on:click="count++">Increment</button>
+    </div>
+
+    <h2>Code</h2>
+    <div x-data="{ 
+        jsContent: 'Loading...',
+        async init() {
+            try {
+                const response = await fetch('main.js');
+                this.jsContent = await response.text();
+            } catch (error) {
+                this.jsContent = 'Error loading index.js: ' + error.message;
+            }
+        } 
+    }">
+        <pre x-text="jsContent"></pre>
+    </div>
+
+    <br>
+    <br>
+    <footer>
+        <p>
+            <small><a href="https://github.com/matthiasschaub/Automerge-Alpine.js-Counter">GitHub</a>.</small>
+        </p>
+    </footer>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
